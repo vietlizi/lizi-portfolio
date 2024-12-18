@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Lizi's Webpage</title>
+  <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+  <div class="container">
+    <div class="small-box">
+      <img src="https://avatars.githubusercontent.com/u/86664792?v=4" alt="Lizi's Avatar" class="avatar">
+      <h1>Hi there, I'm Lizi</h1>
+      <h2>A random weebs on the Internet</h2>
+      <button id="lightModeToggle" onclick="toggleLightMode()">Light on</button>
+    </div>
+
+    <div class="info-box">
+      <h1>Some info about me!</h1>
+      <h2>
+        I play <a href="https://namemc.com/vietlizi" target="_blank">Minecraft</a> and <a href="https://genshin-builds.com/en/profile/841893607" target="_blank">Genshin Impact</a>.
+        <br><br>
+        I listen to a lot of music, including artists like: 
+        <br>
+        <a href="https://open.spotify.com/artist/41MozSoPIsD1dJM0CLPjZF" target="_blank">BLACKPINK</a>, 
+        <a href="https://open.spotify.com/artist/06HL4z0CvFAxyc27GXpf02" target="_blank">Taylor Swift</a>, 
+        <a href="https://open.spotify.com/artist/1LEtM3AleYg1xabW6CRkpi" target="_blank">Đen Vâu</a>, 
+        <a href="https://open.spotify.com/artist/3eVa5w3URK5duf6eyVDbu9" target="_blank">ROSÉ</a>.
+        <br><br>
+        I have a strong addiction to <a href="https://genshin-impact.fandom.com/wiki/Wanderer" target="_blank">Wanderer</a> in Genshin Impact.
+        <br><br>
+        I also like to tweak technology, if you want to get your eyes burned, you can check out my <a href="https://github.com/" target="_blank">GitHub</a>.
+      </h2>
+    </div>
+
+    <div class="social-box">
+      <h3>Find me on!</h3>
+      <a href="https://blsk.com" target="_blank">
+        <img src="https://upload.wikimedia.org/wikipedia/commons/f/fc/Bluesky_butterfly-logo.svg" alt="Bluesky logo"> Bluesky
+      </a>
+      <a href="https://github.com/lizi" target="_blank">
+        <img src="https://upload.wikimedia.org/wikipedia/commons/9/91/Octicons-mark-github.svg" alt="GitHub logo"> GitHub
+      </a>
+      <a href="https://twitter.com/lizi" target="_blank">
+        <img src="https://upload.wikimedia.org/wikipedia/commons/6/6f/Logo_of_Twitter.svg" alt="Twitter logo"> Twitter
+      </a>
+      <a href="javascript:void(0)" class="more-info" onclick="showPopup()">
+        <img src="https://upload.wikimedia.org/wikipedia/commons/8/88/Travel_Bag_Flat_Icon_Vector.svg" alt="More Info"> More Info
+      </a>
+    </div>
+  </div>
+  <div class="popup" id="popup">
+    <div class="popup-content">
+      <span class="close" onclick="closePopup()">&times;</span>
+      <h2>I like to keep my personal info private, but since you're here, <a href="https://www.youtube.com/watch?v=eA0lHNZ1KCA" target="_blank">here is a video that you should watch!</a></h2>
+    </div>
+  </div>
+
+  <script src="script.js"></script>
+</body>
+</html>
