@@ -213,8 +213,40 @@ body.light-mode h3 {
   border: none;
   border-radius: 8px;
   margin-top: 20px;
+  align-self: center;
 }
 
 #lightModeToggle:hover {
   background-color: #005fa3;
+}
+
+@media (max-width: 768px) {
+  .container {
+    width: 90%;
+  }
+
+  .small-box, .info-box, .social-box {
+    width: 100%;
+    text-align: center;
+  }
+
+  #lightModeToggle {
+    margin-top: 20px;
+    align-self: center;
+  }
+
+  .social-box a {
+    text-align: center;
+    display: inline-block;
+    margin: 5px 15px;
+  }
+
+  .social-box img {
+    margin-right: 5px;
+  }
+
+  .popup-content {
+    width: 90%;
+    padding: 15px;
+  }
 }
