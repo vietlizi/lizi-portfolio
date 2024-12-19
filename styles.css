@@ -5,10 +5,9 @@ body {
   background-color: #121212;
   color: white;
   display: flex;
-  justify-content: flex-start;
-  align-items: flex-start;
-  height: auto;
-  min-height: 100vh;
+  justify-content: center;
+  align-items: center;
+  height: 100vh;
   text-align: center;
   overflow-y: auto;
 }
