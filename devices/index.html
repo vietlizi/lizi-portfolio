@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>@devices</title>
+  <link rel="icon" href="favicon.ico" type="image/x-icon">
+  <link href="https://fonts.googleapis.com/css2?family=Exo+2:wght@300;400;600&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+  <div class="container">
+    <div class="small-box">
+      <img src="https://avatars.githubusercontent.com/u/86664792?v=4" alt="Lizi's Avatar" class="avatar">
+      <h1>Hi there, I'm Lizi</h1>
+      <h2>A random weeb on the Internet</h2>
+      <button id="lightModeToggle" onclick="toggleLightMode()">Light on</button>
+      <button id="headHomeButton" onclick="redirectHome()">Head home</button>
+    </div>
+
+    <div class="info-box">
+      <h1>My Devices!</h1>
+      
+      <label for="device-select">Select Device:</label>
+      <select id="device-select" onchange="changeDevice()">
+        <option value="rm8p">Red Magic 8 Pro</option>
+        <option value="11prm">iPhone 11 Pro Max</option>
+        <option value="macbook">Macbook Air M1</option>
+      </select>
+
+      <div id="device-info" class="device-info">
+        <img id="device-img" src="img/rm8p.png" alt="Red Magic 8 Pro">
+        <div class="specs">
+          <h3>Red Magic 8 Pro</h3>
+          <ul>
+            <li>Display: 6.8" AMOLED</li>
+            <li>Processor: Snapdragon 8 Gen 2</li>
+            <li>RAM: 12 GB</li>
+            <li>Storage: 256 GB</li>
+            <li>Battery: 6000 mAh</li>
+          </ul>
+        </div>
+      </div>
+    </div>
+
+    <div class="social-box">
+      <h3>Find me on!</h3>
+      <a href="https://bsky.app/profile/vietlizi.space" target="_blank">
+        <img src="https://upload.wikimedia.org/wikipedia/commons/f/fc/Bluesky_butterfly-logo.svg" alt="Bluesky logo"> Bluesky
+      </a>
+      <a href="https://github.com/vietlizi" target="_blank">
+        <img src="https://upload.wikimedia.org/wikipedia/commons/9/91/Octicons-mark-github.svg" alt="GitHub logo"> GitHub
+      </a>
+      <a href="https://www.youtube.com/watch?v=1kXLsrun51s" target="_blank">
+        <img src="https://upload.wikimedia.org/wikipedia/commons/6/6f/Logo_of_Twitter.svg" alt="Twitter logo"> Twitter
+      </a>
+      <a href="javascript:void(0)" class="more-info" onclick="showPopup()">
+        <img src="https://upload.wikimedia.org/wikipedia/commons/8/88/Travel_Bag_Flat_Icon_Vector.svg" alt="More Info"> More Info
+      </a>
+    </div>
+  </div>
+
+  <div class="popup" id="popup">
+    <div class="popup-content">
+      <span class="close" onclick="closePopup()">&times;</span>
+      <h2>I like to keep my info private, but since you're here, <a href="https://www.youtube.com/watch?v=eA0lHNZ1KCA" target="_blank">here is a video that you should watch!</a></h2>
+    </div>
+  </div>
+
+  <script src="script.js"></script>
+</body>
+</html>
