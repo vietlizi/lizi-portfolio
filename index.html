@@ -24,16 +24,14 @@
         <br><br>
         I listen to a lot of music, including artists like: 
         <br>
-        <a href="https://open.spotify.com/artist/41MozSoPIsD1dJM0CLPjZF" target="_blank">BLACKPINK</a>, 
+        <a href="javascript:void(0)" onclick="showPopup('blackpink')">BLACKPINK</a>, 
         <a href="https://open.spotify.com/artist/06HL4z0CvFAxyc27GXpf02" target="_blank">Taylor Swift</a>, 
         <a href="https://open.spotify.com/artist/1LEtM3AleYg1xabW6CRkpi" target="_blank">Đen Vâu</a>, 
-        <a href="https://open.spotify.com/artist/3eVa5w3URK5duf6eyVDbu9" target="_blank">ROSÉ</a>.
+        <a href="https://open.spotify.com/artist/1SIocsqdEefUTE6XKGUiVS" target="_blank">BABYMONSTER</a>.
         <br><br>
         I have a strong addiction to <a href="https://genshin-impact.fandom.com/wiki/Wanderer" target="_blank">Wanderer</a> in Genshin Impact.
         <br><br>
-        I also like to tweak technology, if you want to get your eyes burned, you can check out my <a href="https://github.com/vietlizi" target="_blank">GitHub</a>.
-         <br><br>
-        If you <i>somehow</i> likes this website, you can check out its repo <a href="https://github.com/vietlizi/lizi-portfolio" target="_blank">here</a>.
+        I also like to tweak technology, if you want to get your eyes burned, you can check out some of my <a href="javascript:void(0)" class="projects" onclick="showPopup('projects')">projects</a>.
       </h2>
     </div>
 
@@ -48,7 +46,7 @@
       <a href="https://www.youtube.com/watch?v=1kXLsrun51s" target="_blank">
         <img src="https://upload.wikimedia.org/wikipedia/commons/6/6f/Logo_of_Twitter.svg" alt="Twitter logo"> Twitter
       </a>
-      <a href="javascript:void(0)" class="more-info" onclick="showPopup()">
+      <a href="javascript:void(0)" class="more-info" onclick="showPopup('moreInfo')">
         <img src="https://upload.wikimedia.org/wikipedia/commons/8/88/Travel_Bag_Flat_Icon_Vector.svg" alt="More Info"> More Info
       </a>
     </div>
@@ -56,7 +54,8 @@
   <div class="popup" id="popup">
     <div class="popup-content">
       <span class="close" onclick="closePopup()">&times;</span>
-      <h2>I like to keep my info private, but since you're here, <a href="https://www.youtube.com/watch?v=eA0lHNZ1KCA" target="_blank">here is a video that you should watch!</a></h2>
+      <h2 id="popup-title"></h2>
+      <p id="popup-content"></p>
     </div>
   </div>
 
