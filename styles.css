@@ -21,18 +21,23 @@ body {
   padding: 20px;
   margin-top: 20px;
   margin-bottom: 20px;
-  overflow: hidden;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
 }
 
-.small-box {
+.small-box, .info-box, .social-box {
+  width: 100%;
+  max-width: 500px;
   background-color: #333;
   border-radius: 8px;
   padding: 20px;
   margin-bottom: 30px;
   display: flex;
-  justify-content: center;
-  align-items: center;
   flex-direction: column;
+  align-items: center;
+  text-align: center;
 }
 
 .small-box h1 {
@@ -40,8 +45,6 @@ body {
   font-size: 30px;
   color: white;
   margin-bottom: 5px;
-  margin-right: 10px;
-  display: inline-block;
   line-height: 1.5;
 }
 
@@ -56,23 +59,15 @@ body {
   height: 50px;
   border-radius: 50%;
   object-fit: cover;
-  margin-bottom: 3px;
+  margin-bottom: 10px;
   transition: filter 0.3s ease;
-}
-
-.info-box {
-  font-family: 'Exo 2', sans-serif;
-  background-color: #333;
-  border-radius: 8px;
-  padding: 20px;
-  margin-bottom: 30px;
 }
 
 .info-box h1 {
   font-family: 'Exo 2', sans-serif;
   font-size: 30px;
   color: white;
-  margin-bottom: 5px;
+  margin-bottom: 10px;
 }
 
 .info-box h2 {
@@ -87,16 +82,6 @@ body {
   font-weight: bold;
 }
 
-.social-box {
-  background-color: #333;
-  border-radius: 8px;
-  padding: 20px;
-  margin-bottom: 30px;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-}
-
 .social-box h3 {
   font-size: 22px;
   color: white;
@@ -107,23 +92,22 @@ body {
   text-decoration: none;
   color: #56CCF2;
   font-size: 18px;
-  display: block;
   margin: 10px 0;
   font-weight: bold;
-  text-align: center;
+  display: flex;
+  align-items: center;
+  justify-content: center;
 }
 
 .social-box img {
   width: 24px;
   height: 24px;
-  vertical-align: middle;
   margin-right: 10px;
 }
 
 .more-info img {
   width: 24px;
   height: 24px;
-  vertical-align: middle;
   margin-right: 10px;
 }
 
