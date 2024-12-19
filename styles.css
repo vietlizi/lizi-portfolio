@@ -6,10 +6,11 @@ body {
   color: white;
   display: flex;
   justify-content: center;
-  align-items: center;
+  align-items: flex-start;
+  flex-direction: column;
   height: 100vh;
   text-align: center;
-  overflow-y: auto;
+  padding-top: 20px;
 }
 
 .container {
@@ -19,17 +20,12 @@ body {
   border-radius: 10px;
   box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
   padding: 20px;
-  margin-top: 20px;
   margin-bottom: 20px;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: center;
 }
 
-.small-box, .info-box, .social-box {
-  width: 100%;
-  max-width: 500px;
+.small-box,
+.info-box,
+.social-box {
   background-color: #333;
   border-radius: 8px;
   padding: 20px;
@@ -37,7 +33,7 @@ body {
   display: flex;
   flex-direction: column;
   align-items: center;
-  text-align: center;
+  justify-content: center;
 }
 
 .small-box h1 {
@@ -45,7 +41,6 @@ body {
   font-size: 30px;
   color: white;
   margin-bottom: 5px;
-  line-height: 1.5;
 }
 
 .small-box h2 {
@@ -60,7 +55,6 @@ body {
   border-radius: 50%;
   object-fit: cover;
   margin-bottom: 10px;
-  transition: filter 0.3s ease;
 }
 
 .info-box h1 {
@@ -92,22 +86,22 @@ body {
   text-decoration: none;
   color: #56CCF2;
   font-size: 18px;
+  display: block;
   margin: 10px 0;
   font-weight: bold;
-  display: flex;
-  align-items: center;
-  justify-content: center;
 }
 
 .social-box img {
   width: 24px;
   height: 24px;
+  vertical-align: middle;
   margin-right: 10px;
 }
 
 .more-info img {
   width: 24px;
   height: 24px;
+  vertical-align: middle;
   margin-right: 10px;
 }
 
@@ -123,7 +117,6 @@ body {
   justify-content: center;
   align-items: center;
   padding: 10px;
-  overflow: auto;
 }
 
 .popup-content {
@@ -135,8 +128,6 @@ body {
   position: relative;
   max-width: 600px;
   width: 100%;
-  max-height: 80vh;
-  overflow-y: auto;
 }
 
 .popup .close {
@@ -200,40 +191,8 @@ body.light-mode h3 {
   border: none;
   border-radius: 8px;
   margin-top: 20px;
-  align-self: center;
 }
 
 #lightModeToggle:hover {
   background-color: #005fa3;
-}
-
-@media (max-width: 768px) {
-  .container {
-    width: 90%;
-  }
-
-  .small-box, .info-box, .social-box {
-    width: 100%;
-    text-align: center;
-  }
-
-  #lightModeToggle {
-    margin-top: 20px;
-    align-self: center;
-  }
-
-  .social-box a {
-    text-align: center;
-    display: inline-block;
-    margin: 5px 15px;
-  }
-
-  .social-box img {
-    margin-right: 5px;
-  }
-
-  .popup-content {
-    width: 90%;
-    padding: 15px;
-  }
 }
