@@ -36,7 +36,7 @@ function showPopup(type) {
     `;
   } else if (type === 'moreInfo') {
     popupTitle.textContent = 'More Info';
-    popupContent.innerHTML = 'I like to keep my personal information private, but since you're here, here is a video that you should <a href="https://www.youtube.com/watch?v=1kXLsrun51s" target="_blank" style="color: white;">watch</a>.';
+    popupContent.innerHTML = 'I like to keep my personal information private, but since you are here, here is a video that you should <a href="https://www.youtube.com/watch?v=1kXLsrun51s" target="_blank" style="color: white;">watch</a>.';
   }
 
   popup.style.display = 'flex';
