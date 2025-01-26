@@ -7,9 +7,9 @@ function toggleLightMode() {
   
   const button = document.getElementById("lightModeToggle");
   if (document.body.classList.contains("light-mode")) {
-    button.textContent = "Dark on";  // Change button text
+    button.textContent = "Dark on";
   } else {
-    button.textContent = "Light on";  // Change button text back
+    button.textContent = "Light on";
   }
 }
 
