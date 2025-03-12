@@ -29,9 +29,8 @@ function showPopup(type) {
   } else if (type === 'projects') {
     popupTitle.textContent = 'My Projects';
     popupContent.innerHTML = `
-      <p><a href="https://github.com/vietlizi/phone-is-encrypted" target="_blank" style="color: white;">Phone Is Encrypted</a>: Spoof your "not-encrypted" phone to appear encrypted.</p>
-      <p><a href="https://github.com/vietlizi/lizi-portfolio" target="_blank" style="color: white;">Lizi Portfolio</a>: Repo of this site.</p>
-      <p><a href="https://github.com/vietlizi/datereminder" target="_blank" style="color: white;">Date Reminder</a>:  A simple (yet boring) date reminder for Vietnamese students that will make you have PTSD whenever looking at your computer. .</p>
+      <p><a href="https://github.com/vietlizi/phone-is-encrypted" target="_blank" style="color: white;">Phone Is Encrypted</a>: Spoof your "not-encrypted" phone to appear encrypted.</p>\
+      <p><a href="https://github.com/vietlizi/datereminder" target="_blank" style="color: white;">Date Reminder</a>:  A simple (yet boring) date reminder for Vietnamese students that will make you have PTSD whenever looking at your computer.</p>
 
       <br>
       <p>Mostly all my other projects are failed/unfinished, if you want your eyes to burn badly you can check them out at my <a href="https://github.com/vietlizi" target="_blank" style="color: white;">GitHub</a>.</p>
