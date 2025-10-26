@@ -1,0 +1,383 @@
+* {
+  box-sizing: border-box;
+  -webkit-font-smoothing: antialiased;
+  margin: 0;
+  padding: 0;
+}
+
+:root {
+  --bg: #0f0f10;
+  --panel: #1a1a1d;
+  --text-main: #ffffff;
+  --text-dim: #bdbdbd;
+  --accent: #4da3ff;
+  --border: #2a2a2f;
+}
+
+body.light-mode {
+  --bg: #ffffff;
+  --panel: #f4f4f6;
+  --text-main: #000000;
+  --text-dim: #444;
+  --accent: #005cff;
+  --border: #cfcfd6;
+}
+
+body {
+  font-family: "Exo 2", -apple-system, BlinkMacSystemFont, "Segoe UI",
+    Roboto, "Helvetica Neue", system-ui, sans-serif;
+  background-color: var(--bg);
+  color: var(--text-main);
+  font-size: 16px;
+  line-height: 1.5;
+}
+
+.page {
+  max-width: 900px;
+  margin: 24px auto 80px auto;
+  padding: 0 16px;
+}
+
+/* HEADER */
+.topbar {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+  flex-wrap: wrap;
+  row-gap: 12px;
+  margin-bottom: 16px;
+}
+
+.left-head {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+
+.site-name {
+  font-size: 28px;
+  font-weight: 600;
+  line-height: 1.2;
+  color: var(--text-main);
+}
+
+/* nav tabs */
+.site-nav {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 20px;
+}
+
+.nav-link {
+  background: none;
+  border: none;
+  padding: 0;
+  font-family: inherit;
+  font-size: 18px;
+  font-weight: 500;
+  line-height: 1.2;
+  color: var(--accent);
+  cursor: pointer;
+  text-decoration: none;
+}
+
+.nav-link.active {
+  text-decoration: underline;
+  text-underline-offset: 4px;
+}
+
+.nav-link:hover {
+  text-decoration: underline;
+}
+
+/* social icons header */
+.social-icons {
+  display: flex;
+  gap: 16px;
+  font-size: 0;
+  align-items: flex-start;
+}
+
+.icon-btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  text-decoration: none;
+}
+
+.icon-btn img {
+  width: 32px;
+  height: 32px;
+  object-fit: contain;
+  display: block;
+  filter: none;
+}
+
+/* keep github dark in light mode */
+body.light-mode .icon-btn img.github-icon {
+  filter: invert(0);
+}
+
+/* ABOUT WRAPPER */
+.about-wrapper {
+  display: block;
+}
+.about-wrapper.hidden {
+  display: none;
+}
+
+.card-panel {
+  background-color: var(--panel);
+  border: 1px solid var(--border);
+  border-radius: 8px;
+  padding: 16px;
+  margin-bottom: 20px;
+}
+
+/* avatar row */
+.avatar-row {
+  display: flex;
+  align-items: flex-start;
+  gap: 16px;
+  flex-wrap: wrap;
+  margin-bottom: 12px;
+}
+
+.avatar-img {
+  width: 64px;
+  height: 64px;
+  border-radius: 50%;
+  border: 1px solid var(--border);
+  object-fit: cover;
+}
+
+.intro-text {
+  flex: 1;
+  min-width: 200px;
+}
+
+.intro-name {
+  font-size: 20px;
+  font-weight: 600;
+  line-height: 1.3;
+  color: var(--text-main);
+  margin-bottom: 4px;
+  text-transform: none;
+}
+
+.intro-sub {
+  font-size: 15px;
+  color: var(--text-dim);
+  line-height: 1.4;
+  text-transform: none;
+}
+
+/* about body text */
+.bio-block {
+  border-top: 2px solid var(--border);
+  padding-top: 16px;
+  font-size: 16px;
+  line-height: 1.5;
+  color: var(--text-main);
+}
+
+.bio-block p {
+  margin-bottom: 14px;
+}
+
+.bio-block p:last-child {
+  margin-bottom: 0;
+}
+
+.bold {
+  font-weight: 600;
+  color: var(--text-main);
+}
+
+.accent-link {
+  color: var(--accent);
+  text-decoration: none;
+  font-weight: 500;
+}
+.accent-link:hover {
+  text-decoration: underline;
+}
+
+/* music callout box */
+.music-callout {
+  margin-top: 16px;
+  background-color: var(--panel);
+  border: 1px solid var(--border);
+  border-radius: 8px;
+  padding: 12px 16px;
+  font-size: 14px;
+  line-height: 1.5;
+  color: var(--text-main);
+}
+
+.music-callout-title {
+  font-weight: 600;
+  font-size: 14px;
+  margin-bottom: 8px;
+  color: var(--text-main);
+}
+
+.music-callout a {
+  color: var(--accent);
+  text-decoration: none;
+  font-weight: 500;
+  display: inline-block;
+  margin-bottom: 6px;
+}
+.music-callout a:hover {
+  text-decoration: underline;
+}
+
+/* theme toggle link */
+.theme-toggle {
+  font-size: 14px;
+  color: var(--accent);
+  cursor: pointer;
+  text-decoration: underline;
+  text-underline-offset: 3px;
+  font-weight: 500;
+  margin-top: 16px;
+  display: inline-block;
+}
+
+/* PROJECTS WRAPPER */
+.projects-wrapper {
+  display: none;
+}
+.projects-wrapper.active {
+  display: block;
+}
+
+.projects-heading {
+  font-size: 16px;
+  font-weight: 600;
+  line-height: 1.3;
+  margin-bottom: 16px;
+  color: var(--text-main);
+}
+
+.timeline-item {
+  display: flex;
+  align-items: flex-start;
+  gap: 16px;
+  border-top: 1px solid var(--border);
+  padding: 12px 0;
+}
+
+.timeline-item:first-of-type {
+  border-top: 1px solid var(--border);
+}
+
+.timeline-date {
+  flex: 0 0 110px;
+  font-size: 15px;
+  color: var(--text-main);
+  line-height: 1.4;
+  text-transform: none;
+}
+
+.timeline-content {
+  flex: 1;
+}
+
+.proj-title {
+  font-size: 16px;
+  font-weight: 600;
+  color: var(--accent);
+  margin-bottom: 4px;
+  line-height: 1.3;
+  text-transform: none;
+}
+
+.proj-title a {
+  color: var(--accent);
+  text-decoration: none;
+}
+.proj-title a:hover {
+  text-decoration: underline;
+}
+
+.proj-desc {
+  font-size: 15px;
+  color: var(--text-main);
+  margin-bottom: 4px;
+  line-height: 1.4;
+  text-transform: none;
+}
+
+.proj-tags {
+  font-size: 13px;
+  color: var(--text-dim);
+  font-style: italic;
+  line-height: 1.4;
+  text-transform: none;
+}
+
+.proj-more {
+  margin-top: 24px;
+  font-size: 15px;
+  line-height: 1.5;
+  color: var(--text-main);
+  text-transform: none;
+}
+
+.proj-more a {
+  color: var(--accent);
+  text-decoration: none;
+  font-weight: 500;
+}
+.proj-more a:hover {
+  text-decoration: underline;
+}
+
+/* FOOTER */
+.site-footer {
+  margin-top: 40px;
+  font-size: 12px;
+  color: var(--text-dim);
+  line-height: 1.4;
+  text-align: left;
+}
+
+.site-footer a {
+  color: var(--accent);
+  text-decoration: none;
+  font-weight: 500;
+}
+.site-footer a:hover {
+  text-decoration: underline;
+}
+
+/* interactivity affordance */
+.projects-jump {
+  cursor: pointer;
+}
+
+/* responsive */
+@media (max-width: 500px) {
+  .site-name {
+    font-size: 22px;
+  }
+  .nav-link {
+    font-size: 16px;
+  }
+  .icon-btn img {
+    width: 28px;
+    height: 28px;
+  }
+  .timeline-date {
+    flex-basis: 90px;
+    font-size: 14px;
+  }
+  .proj-title {
+    font-size: 15px;
+  }
+  .proj-desc {
+    font-size: 14px;
+  }
+}
