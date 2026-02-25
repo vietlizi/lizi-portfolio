@@ -4,227 +4,76 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Hello World</title>
+  <meta name="description" content="whooslizi" />
 
-  <link rel="preconnect" href="https://fonts.gstatic.com" />
-  <link
-    href="https://fonts.googleapis.com/css2?family=Exo+2:wght@400;500;600&display=swap"
-    rel="stylesheet"
-  />
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Press+Start+2P&display=swap" rel="stylesheet">
 
-  <link rel="stylesheet" href="styles.css" />
+  <link rel="stylesheet" href="./styles.css" />
 </head>
-<body class="dark-mode">
-  <div class="page">
-    <!-- HEADER -->
-    <header class="topbar">
-      <div class="left-head">
-        <div class="site-name">lizi</div>
 
-        <nav class="site-nav">
-          <button class="nav-link active" data-target="about">about</button>
-          <button class="nav-link" data-target="projects">projects</button>
-        </nav>
+<body>
+  <div class="pageClouds" aria-hidden="true">
+    <span class="c c1"></span>
+    <span class="c c2"></span>
+    <span class="c c3"></span>
+    <span class="c c4"></span>
+    <span class="c c5"></span>
+    <span class="c c6"></span>
+  </div>
+
+  <!-- HEADER -->
+  <header class="topbar">
+    <div class="brand">whooslizi</div>
+
+    <nav class="nav">
+      <a href="https://github.com/whooslizi" target="_blank" rel="noopener">Projects</a>
+    </nav>
+  </header>
+
+  <main class="hero">
+    <!-- LEFT sec -->
+    <section class="left">
+      <div class="hello">Hello, I’m</div>
+      <h1 class="name">whooslizi</h1>
+
+      <div class="bio">
+        <p>I play <b>Minecraft</b> and <b>Genshin Impact</b>.</p>
+
+        <p>
+          I listen to a lot of music, including
+          <a href="https://open.spotify.com/artist/41MozSoPIsD1dJM0CLPjZF" target="_blank" rel="noopener">BLACKPINK</a>,
+          <a href="https://open.spotify.com/artist/06HL4z0CvFAxyc27GXpf02" target="_blank" rel="noopener">Taylor Swift</a>,
+          <a href="https://open.spotify.com/artist/1LEtM3AleYg1xabW6CRkpi" target="_blank" rel="noopener">Đen Vâu</a>,
+          <a href="https://open.spotify.com/artist/0BabS6fZxJY5qN9x7YF0YF" target="_blank" rel="noopener">BABYMONSTER</a>.
+        </p>
+
+        <p>
+          I have a strong addiction to
+          <a href="https://genshin-impact.fandom.com/wiki/Wanderer" target="_blank" rel="noopener">Wanderer</a>
+          and
+          <a href="https://tenkinoko.fandom.com/wiki/Hodaka_Morishima" target="_blank" rel="noopener">Hodaka</a>
+          from <i>Tenki no Ko</i>.
+        </p>
+
+        <p>
+          I also like to tweak technology — if you want to get your eyes burned,
+          you can check out my
+          <a href="https://github.com/whooslizi" target="_blank" rel="noopener">projects</a>.
+        </p>
       </div>
 
-      <div class="social-icons">
-        <a
-          class="icon-btn"
-          href="https://github.com/whooslizi"
-          target="_blank"
-          rel="noopener noreferrer"
-          aria-label="GitHub"
-        >
-          <img
-            class="github-icon"
-            src="https://upload.wikimedia.org/wikipedia/commons/9/91/Octicons-mark-github.svg"
-            alt="GitHub"
-          />
-        </a>
-      </div>
-    </header>
-
-    <!-- ABOUT sec -->
-    <section class="about-wrapper" id="about">
-      <div class="card-panel">
-        <div class="avatar-row">
-          <img
-            src="https://avatars.githubusercontent.com/u/86664792?v=4"
-            alt="lizi avatar"
-            class="avatar-img"
-          />
-          <div class="intro-text">
-            <div class="intro-name">hi there, i'm lizi</div>
-            <div class="intro-sub">a random weeb on the internet</div>
-          </div>
-        </div>
-
-        <div class="bio-block">
-
-          <p>
-            I play
-            <a class="accent-link"
-               href="https://sky.shiiyu.moe/stats/WhoosLizi/Orange"
-               target="_blank"
-               rel="noopener noreferrer">
-              Minecraft
-            </a>
-            and
-            <a class="accent-link"
-               href="https://enka.network/u/841893607/"
-               target="_blank"
-               rel="noopener noreferrer">
-              Genshin Impact
-            </a>
-          </p>
-
-          <p>
-            I listen to a lot of music, including artists like
-            <a class="accent-link"
-               id="blackpinkLink"
-               href="https://open.spotify.com/artist/41MozSoPIsD1dJM0CLPjZF"
-               target="_blank"
-               rel="noopener noreferrer">
-              BLACKPINK,
-            </a>
-            <a class="accent-link"
-               href="https://open.spotify.com/artist/06HL4z0CvFAxyc27GXpf02"
-               target="_blank"
-               rel="noopener noreferrer">
-              Taylor Swift,
-            </a>
-            <a class="accent-link"
-               href="https://open.spotify.com/artist/1LEtM3AleYg1xabW6CRkpi"
-               target="_blank"
-               rel="noopener noreferrer">
-              Đen Vâu,
-            </a>
-            <a class="accent-link"
-               href="https://open.spotify.com/artist/1SIocsqdEefUTE6XKGUiVS"
-               target="_blank"
-               rel="noopener noreferrer">
-              BABYMONSTER.
-            </a>
-          </p>
-
-          <p>
-            I have a strong addiction to
-            <a class="accent-link"
-               href="https://genshin-impact.fandom.com/wiki/Wanderer"
-               target="_blank"
-               rel="noopener noreferrer">
-              Wanderer
-            </a>
-            in Genshin Impact, and
-            <a class="accent-link"
-                href="https://tenkinoko.fandom.com/wiki/Hodaka_Morishima"
-                target="_blank"
-                rel="noopener noreferrer">
-             Hodaka from Tenki no ko
-            </a>
-          </p>
-
-          <p>
-            I also like to tweak technology, if you want to get your eyes burned,
-           you can check out my
-            <span class="accent-link projects-jump" role="button" tabindex="0">
-              projects
-            </span>
-          </p>
-
-          <!-- theme toggle -->
-          <p>
-            <span
-              id="themeToggle"
-              class="theme-toggle"
-              role="button"
-              tabindex="0"
-            >
-              do you know that you can also burn your eye from clicking this
-            </span>
-          </p>
-        </div>
-      </div>
+      <div class="hint">Tip: press <kbd>Space</kbd> or click to flap.</div>
+      <div class="copyright">Copyright © 2026 Lizi</div>
     </section>
 
-    <!-- PROJECTS -->
-      <section class="projects-wrapper" id="projects">
-  <h2 class="projects-heading">projects</h2>
+    <!-- GAME sec -->
+    <section class="right">
+      <canvas id="game" aria-label="Flappy game"></canvas>
+    </section>
+  </main>
 
-  <div class="timeline-item">
-    <div class="timeline-date">2025</div>
-    <div class="timeline-content">
-      <div class="proj-title">
-        <a href="https://github.com/whooslizi/lizi-portfolio"
-           target="_blank"
-           rel="noopener noreferrer">
-          this website
-        </a>
-      </div>
-      <div class="proj-desc">
-        repo of this website. what
-      </div>
-      <div class="proj-tags">web, html, css, js</div>
-    </div>
-  </div>
-
-  <div class="timeline-item">
-    <div class="timeline-date">2025</div>
-    <div class="timeline-content">
-      <div class="proj-title">
-        <a href="https://github.com/whooslizi/phone-is-encrypted"
-           target="_blank"
-           rel="noopener noreferrer">
-          phone is encrypted
-        </a>
-      </div>
-      <div class="proj-desc">
-        spoof your “not-encrypted” phone to appear encrypted.
-      </div>
-      <div class="proj-tags">shell, android</div>
-    </div>
-  </div>
-
-  <div class="timeline-item">
-    <div class="timeline-date">2025</div>
-    <div class="timeline-content">
-      <div class="proj-title">
-        <a href="https://github.com/whooslizi/datereminder"
-           target="_blank"
-           rel="noopener noreferrer">
-          date reminder
-        </a>
-      </div>
-      <div class="proj-desc">
-        vietnamese-student style panic app: loud deadlines so you get
-        instant ptsd looking at your computer.
-      </div>
-      <div class="proj-tags">swift, macos</div>
-    </div>
-  </div>
-
-  <div class="proj-more">
-    mostly everything else is failed / unfinished if you want
-    your eyes burned badly:
-    <a class="accent-link"
-       href="https://github.com/whooslizi"
-       target="_blank"
-       rel="noopener noreferrer">
-      check out my <i>other</i> github repoes
-    </a>.
-  </div>
-</section>
-
-    <!-- FOOTER -->
-    <footer class="site-footer">
-      copyright © <span id="year"></span>
-      <a href="https://whooslizi.dev"
-         target="_blank"
-         rel="noopener noreferrer">
-        Lizi
-      </a>
-    </footer>
-  </div>
-
-  <script src="script.js"></script>
+  <script src="./script.js"></script>
 </body>
 </html>
