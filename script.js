@@ -1,348 +1,299 @@
-(() => {
-  const canvas = document.getElementById("game");
-  const ctx = canvas.getContext("2d");
-  const DPR = Math.max(1, Math.floor(window.devicePixelRatio || 1));
+document.addEventListener('DOMContentLoaded', () => {
+    // DOM Elements
+    const portfolioWindow = document.getElementById('portfolio-window');
+    const titleBar = document.getElementById('window-titlebar');
+    const titleText = document.getElementById('window-title-text');
+    const desktopBg = document.querySelector('.desktop');
+    
+    // Window Controls
+    const closeBtn = document.getElementById('window-close');
+    const minimizeBtn = document.getElementById('window-minimize');
+    const maximizeBtn = document.getElementById('window-maximize');
+    
+    // Theme Switcher (Header Only)
+    const headerThemeToggle = document.getElementById('header-theme-toggle');
+    
+    // Tabs & Navigation
+    const sidebarItems = document.querySelectorAll('.sidebar-item[data-tab]');
+    const tabPanes = document.querySelectorAll('.tab-pane');
+    
+    // Internal Bio Navigation Link
+    const bioProjectsLink = document.getElementById('link-to-projects');
 
-  function resize() {
-    const w = canvas.clientWidth;
-    const h = canvas.clientHeight;
-    canvas.width = Math.floor(w * DPR);
-    canvas.height = Math.floor(h * DPR);
-    ctx.setTransform(DPR, 0, 0, DPR, 0, 0);
-  }
-  window.addEventListener("resize", resize);
-  resize();
+    // Warning Dialog Elements
+    const dialogOverlay = document.getElementById('dialog-overlay');
+    const dialogTitle = document.getElementById('dialog-title');
+    const dialogMessage = document.getElementById('dialog-message');
+    const dialogPrimaryBtn = document.getElementById('dialog-primary-btn');
+    const dialogSecondaryBtn = document.getElementById('dialog-secondary-btn');
 
-  // play rect = full canvas area (slight padding so overlay looks nice)
-  function playRect() {
-    const W = canvas.clientWidth, H = canvas.clientHeight;
-    const pad = Math.max(14, Math.min(22, Math.floor(W * 0.03)));
-    return { x: pad, y: pad, w: W - pad*2, h: H - pad*2 };
-  }
+    /* =========================================================================
+       1. Window Draggable Logic (Desktop Only)
+       ========================================================================= */
+    let isDragging = false;
+    let startX, startY;
 
-  // ===== Game state =====
-  let running = false;
-  let dead = false;
-  let score = 0;
-  let best = Number(localStorage.getItem("flappy_best") || 0);
-
-  const bird = { x: 0, y: 0, r: 12, vy: 0 };
-  let pipes = [];
-  let lastTs = 0;
-  let spawnT = 0;
-
-  const GRAVITY = 0.42;
-  const FLAP = -7.8;
-  const PIPE_SPEED = 2.6;
-  const PIPE_W = 64;
-  const PIPE_GAP = 150;
-  const SPAWN_MS = 1400;
-
-  // fluffy clouds (same style vibe as CSS)
-  const clouds = Array.from({ length: 9 }).map(() => ({
-    x: Math.random(),
-    y: Math.random(),
-    s: 0.65 + Math.random() * 1.1,
-    v: 0.010 + Math.random() * 0.020,
-  }));
-
-  function reset() {
-    const p = playRect();
-    running = false;
-    dead = false;
-    score = 0;
-
-    bird.x = p.x + p.w * 0.26;
-    bird.y = p.y + p.h * 0.45;
-    bird.vy = 0;
-
-    pipes = [];
-    lastTs = 0;
-    spawnT = 0;
-  }
-
-  function spawnPipe(p) {
-    const margin = 70;
-    const minGapY = p.y + margin + PIPE_GAP / 2;
-    const maxGapY = p.y + p.h - margin - PIPE_GAP / 2;
-    const gapY = minGapY + Math.random() * (maxGapY - minGapY);
-
-    pipes.push({ x: p.x + p.w + 20, gapY, passed: false });
-  }
-
-  function flap() {
-    if (!running) running = true;
-    if (dead) { reset(); running = true; }
-    bird.vy = FLAP;
-  }
-
-  function circleRectCollide(cx, cy, r, rx, ry, rw, rh) {
-    const closestX = Math.max(rx, Math.min(cx, rx + rw));
-    const closestY = Math.max(ry, Math.min(cy, ry + rh));
-    const dx = cx - closestX;
-    const dy = cy - closestY;
-    return dx * dx + dy * dy <= r * r;
-  }
-
-  // drawing helpers
-  function roundRect(x, y, w, h, r) {
-    const rr = Math.min(r, w/2, h/2);
-    ctx.beginPath();
-    ctx.moveTo(x+rr, y);
-    ctx.arcTo(x+w, y, x+w, y+h, rr);
-    ctx.arcTo(x+w, y+h, x, y+h, rr);
-    ctx.arcTo(x, y+h, x, y, rr);
-    ctx.arcTo(x, y, x+w, y, rr);
-    ctx.closePath();
-  }
-
-  function drawCloud(px, py, s, alpha=0.90) {
-    ctx.save();
-    ctx.fillStyle = `rgba(255,255,255,${alpha})`;
-    const r = 22 * s;
-
-    ctx.beginPath();
-    ctx.arc(px, py, r, 0, Math.PI * 2);
-    ctx.arc(px + r * 1.05, py + 6 * s, r * 0.85, 0, Math.PI * 2);
-    ctx.arc(px - r * 1.05, py + 7 * s, r * 0.78, 0, Math.PI * 2);
-    ctx.arc(px, py + 12 * s, r * 0.95, 0, Math.PI * 2);
-    ctx.fill();
-    ctx.restore();
-  }
-
-  function drawBackground(p) {
-    // soft sky gradient
-    const g = ctx.createLinearGradient(0, 0, 0, canvas.clientHeight);
-    g.addColorStop(0, "#e9fbf4");
-    g.addColorStop(1, "#d6f2e8");
-    ctx.fillStyle = g;
-    ctx.fillRect(0, 0, canvas.clientWidth, canvas.clientHeight);
-
-    // clouds (inside canvas)
-    const t = performance.now() / 1000;
-    clouds.forEach((c, i) => {
-      const px = p.x + ((c.x + t * c.v) % 1) * p.w;
-      const py = p.y + (0.10 + c.y * 0.35) * p.h + Math.sin(t * 0.7 + i) * 1.5;
-      drawCloud(px, py, c.s, 0.88);
-    });
-  }
-
-  function drawWorld(p) {
-    // rounded play clipping (nice edges, still no board)
-    ctx.save();
-    roundRect(p.x, p.y, p.w, p.h, 18);
-    ctx.clip();
-
-    // ground
-    const groundH = 56;
-    const groundY = p.y + p.h - groundH;
-    ctx.fillStyle = "rgba(155,211,183,0.95)";
-    ctx.fillRect(p.x, groundY, p.w, groundH);
-
-    // tiny flowers pixels
-    for (let i = 0; i < 90; i++) {
-      const x = p.x + (i * 19) % p.w;
-      const y = groundY + 10 + ((i * 11) % 32);
-      ctx.fillStyle = i % 3 === 0 ? "rgba(255,255,255,0.9)"
-        : (i % 3 === 1 ? "rgba(255,209,230,0.9)" : "rgba(255,242,166,0.9)");
-      ctx.fillRect(x, y, 3, 3);
-    }
-
-    // pipes
-    for (const pipe of pipes) {
-      const topH = (pipe.gapY - PIPE_GAP / 2) - p.y;
-      const botY = pipe.gapY + PIPE_GAP / 2;
-
-      ctx.fillStyle = "#3aa675";
-      ctx.fillRect(pipe.x, p.y, PIPE_W, topH);
-      ctx.fillRect(pipe.x, botY, PIPE_W, (p.y + p.h) - botY);
-
-      ctx.fillStyle = "#2e8b63";
-      ctx.fillRect(pipe.x - 6, p.y + topH - 16, PIPE_W + 12, 16);
-      ctx.fillRect(pipe.x - 6, botY, PIPE_W + 12, 16);
-
-      ctx.fillStyle = "rgba(255,255,255,0.18)";
-      ctx.fillRect(pipe.x + 10, p.y, 8, topH);
-      ctx.fillRect(pipe.x + 10, botY, 8, (p.y + p.h) - botY);
-    }
-
-    // bird
-    ctx.fillStyle = "#f1a9a1";
-    ctx.beginPath();
-    ctx.arc(bird.x, bird.y, bird.r, 0, Math.PI * 2);
-    ctx.fill();
-    ctx.lineWidth = 2;
-    ctx.strokeStyle = "rgba(0,0,0,0.22)";
-    ctx.stroke();
-
-    ctx.fillStyle = "#fff";
-    ctx.fillRect(bird.x + 3, bird.y - 7, 8, 8);
-    ctx.fillStyle = "#2b2b2b";
-    ctx.fillRect(bird.x + 7, bird.y - 5, 3, 3);
-
-    ctx.fillStyle = "#ffd1a1";
-    ctx.fillRect(bird.x + 12, bird.y - 1, 10, 6);
-    ctx.strokeStyle = "rgba(0,0,0,0.18)";
-    ctx.strokeRect(bird.x + 12, bird.y - 1, 10, 6);
-
-    // score
-    ctx.font = "16px 'Press Start 2P', monospace";
-    ctx.fillStyle = "rgba(43,43,43,0.70)";
-    ctx.fillText(String(score), p.x + 16, p.y + 32);
-
-    ctx.restore();
-
-    // subtle inner outline (no board, just a thin line)
-    ctx.strokeStyle = "rgba(0,0,0,0.06)";
-    ctx.lineWidth = 1;
-    roundRect(p.x, p.y, p.w, p.h, 18);
-    ctx.stroke();
-  }
-
-  function drawOverlay(p) {
-    const boxW = Math.min(520, p.w * 0.78);
-    const boxH = 230;
-    const bx = p.x + (p.w - boxW) / 2;
-    const by = p.y + (p.h - boxH) / 2 - 10;
-
-    ctx.save();
-    ctx.shadowColor = "rgba(0,0,0,0.10)";
-    ctx.shadowBlur = 26;
-    ctx.shadowOffsetY = 14;
-    ctx.fillStyle = "rgba(246,251,248,0.92)";
-    roundRect(bx, by, boxW, boxH, 16);
-    ctx.fill();
-    ctx.restore();
-
-    ctx.strokeStyle = "rgba(0,0,0,0.08)";
-    ctx.lineWidth = 1;
-    roundRect(bx, by, boxW, boxH, 16);
-    ctx.stroke();
-
-    ctx.font = "16px 'Press Start 2P', monospace";
-    ctx.fillStyle = "rgba(43,43,43,0.78)";
-    ctx.fillText(dead ? "Game Over!" : "Flappy Lizi", bx + 26, by + 46);
-
-    ctx.font = "600 13px Inter, system-ui";
-    ctx.fillStyle = "rgba(43,43,43,0.62)";
-    ctx.fillText(dead ? "Press SPACE or CLICK to retry" : "Press SPACE or CLICK to play", bx + 26, by + 72);
-
-    // score row
-    const rowX = bx + 22, rowY = by + 92, rowW = boxW - 44, rowH = 44;
-    ctx.fillStyle = "rgba(255,255,255,0.55)";
-    ctx.strokeStyle = "rgba(0,0,0,0.10)";
-    roundRect(rowX, rowY, rowW, rowH, 12);
-    ctx.fill(); ctx.stroke();
-
-    ctx.font = "600 12px Inter, system-ui";
-    ctx.fillStyle = "rgba(43,43,43,0.55)";
-    ctx.fillText("Your score", rowX + 14, rowY + 27);
-
-    ctx.font = "16px 'Press Start 2P', monospace";
-    ctx.fillStyle = "rgba(46,139,99,0.95)";
-    ctx.fillText(String(score), rowX + rowW - 44, rowY + 32);
-
-    // button
-    const btnY = rowY + 60, btnH = 44;
-    ctx.fillStyle = "rgba(46,139,99,0.16)";
-    ctx.strokeStyle = "rgba(46,139,99,0.28)";
-    roundRect(rowX, btnY, rowW, btnH, 12);
-    ctx.fill(); ctx.stroke();
-
-    ctx.font = "700 14px Inter, system-ui";
-    ctx.fillStyle = "rgba(46,139,99,0.95)";
-    const t = dead ? "Retry" : "Play";
-    const tw = ctx.measureText(t).width;
-    ctx.fillText(t, rowX + (rowW - tw) / 2, btnY + 28);
-
-    ctx.font = "600 12px Inter, system-ui";
-    ctx.fillStyle = "rgba(43,43,43,0.50)";
-    const note = `Best: ${best}`;
-    ctx.fillText(note, rowX + (rowW - ctx.measureText(note).width) / 2, btnY + 70);
-  }
-
-  function update(dt, p) {
-    const dtSec = dt / 1000;
-
-    // bird physics
-    bird.vy += GRAVITY * (dtSec * 60);
-    bird.y += bird.vy * (dtSec * 60);
-
-    // bounds
-    const groundH = 56;
-    const groundY = p.y + p.h - groundH;
-    if (bird.y + bird.r > groundY) {
-      bird.y = groundY - bird.r;
-      dead = true;
-      running = false;
-      return;
-    }
-    if (bird.y - bird.r < p.y) {
-      bird.y = p.y + bird.r;
-      bird.vy = 0;
-    }
-
-    // pipes
-    for (const pipe of pipes) {
-      pipe.x -= PIPE_SPEED * (dtSec * 60);
-
-      if (!pipe.passed && pipe.x + PIPE_W < bird.x - bird.r) {
-        pipe.passed = true;
-        score += 1;
-        if (score > best) {
-          best = score;
-          localStorage.setItem("flappy_best", String(best));
+    // Center window initially
+    function centerWindow() {
+        if (window.innerWidth > 768 && !portfolioWindow.classList.contains('maximized')) {
+            const rect = portfolioWindow.getBoundingClientRect();
+            const left = (window.innerWidth - rect.width) / 2;
+            const top = (window.innerHeight - rect.height) / 2;
+            portfolioWindow.style.left = `${left}px`;
+            portfolioWindow.style.top = `${top}px`;
+            portfolioWindow.style.transform = 'none'; // Clear scaling offset
+            portfolioWindow.style.margin = '0';
         }
-      }
+    }
+    
+    // Run centering on load and resize
+    setTimeout(() => {
+        centerWindow();
+        // Load last active tab from localStorage
+        const lastTab = localStorage.getItem('activeTab') || 'about';
+        switchTab(lastTab);
+    }, 100);
+    window.addEventListener('resize', centerWindow);
 
-      const topH = (pipe.gapY - PIPE_GAP / 2) - p.y;
-      const botY = pipe.gapY + PIPE_GAP / 2;
-      const botH = (p.y + p.h) - botY;
+    titleBar.addEventListener('mousedown', dragStart);
+    document.addEventListener('mousemove', drag);
+    document.addEventListener('mouseup', dragEnd);
 
-      if (circleRectCollide(bird.x, bird.y, bird.r, pipe.x, p.y, PIPE_W, topH)) {
-        dead = true; running = false; return;
-      }
-      if (circleRectCollide(bird.x, bird.y, bird.r, pipe.x, botY, PIPE_W, botH)) {
-        dead = true; running = false; return;
-      }
+    titleBar.addEventListener('touchstart', dragStart, { passive: true });
+    document.addEventListener('touchmove', drag, { passive: false });
+    document.addEventListener('touchend', dragEnd);
+
+    function dragStart(e) {
+        if (portfolioWindow.classList.contains('maximized')) return;
+        
+        portfolioWindow.classList.add('active');
+        
+        const clientX = e.type === 'touchstart' ? e.touches[0].clientX : e.clientX;
+        const clientY = e.type === 'touchstart' ? e.touches[0].clientY : e.clientY;
+        
+        isDragging = true;
+        
+        const styleLeft = parseInt(portfolioWindow.style.left) || 0;
+        const styleTop = parseInt(portfolioWindow.style.top) || 0;
+        
+        startX = clientX - styleLeft;
+        startY = clientY - styleTop;
     }
 
-    pipes = pipes.filter(pipe => pipe.x > p.x - PIPE_W - 50);
-
-    // spawn
-    spawnT += dt;
-    if (spawnT >= SPAWN_MS) {
-      spawnT = 0;
-      spawnPipe(p);
+    function drag(e) {
+        if (!isDragging) return;
+        
+        if (e.type === 'touchmove') {
+            e.preventDefault();
+        }
+        
+        const clientX = e.type === 'touchmove' ? e.touches[0].clientX : e.clientX;
+        const clientY = e.type === 'touchmove' ? e.touches[0].clientY : e.clientY;
+        
+        let newX = clientX - startX;
+        let newY = clientY - startY;
+        
+        // Boundaries constraint (Keep at least 100px visible)
+        const minVisible = 100;
+        const maxLeft = window.innerWidth - minVisible;
+        const minLeft = -portfolioWindow.offsetWidth + minVisible;
+        const maxTop = window.innerHeight - 50;
+        const minTop = 0;
+        
+        if (newX < minLeft) newX = minLeft;
+        if (newX > maxLeft) newX = maxLeft;
+        if (newY < minTop) newY = minTop;
+        if (newY > maxTop) newY = maxTop;
+        
+        portfolioWindow.style.left = `${newX}px`;
+        portfolioWindow.style.top = `${newY}px`;
     }
-  }
 
-  function loop(ts) {
-    if (!lastTs) lastTs = ts;
-    const dt = Math.min(40, ts - lastTs);
-    lastTs = ts;
-
-    const p = playRect();
-
-    drawBackground(p);
-    drawWorld(p);
-
-    if (running && !dead) update(dt, p);
-    if (!running || dead) drawOverlay(p);
-
-    requestAnimationFrame(loop);
-  }
-
-  // input
-  window.addEventListener("keydown", (e) => {
-    if (e.code === "Space") {
-      e.preventDefault();
-      flap();
+    function dragEnd() {
+        isDragging = false;
     }
-  }, { passive:false });
 
-  canvas.addEventListener("mousedown", () => flap());
+    // Toggle active state on click
+    portfolioWindow.addEventListener('click', (e) => {
+        e.stopPropagation();
+        portfolioWindow.classList.add('active');
+    });
 
-  reset();
-  requestAnimationFrame(loop);
-})();
+    // Restore window when background desktop is clicked
+    desktopBg.addEventListener('click', (e) => {
+        if (e.target === desktopBg || e.target.classList.contains('blob') || e.target.closest('#touch-grass-view')) {
+            if (portfolioWindow.classList.contains('minimized') || !portfolioWindow.classList.contains('active')) {
+                portfolioWindow.classList.remove('minimized');
+                portfolioWindow.classList.add('active');
+                
+                // Hide touch-grass container
+                const touchGrassView = document.getElementById('touch-grass-view');
+                if (touchGrassView) {
+                    touchGrassView.classList.remove('visible');
+                }
+                
+                setTimeout(centerWindow, 50);
+            } else {
+                portfolioWindow.classList.remove('active');
+            }
+        }
+    });
+
+    /* =========================================================================
+       2. Sidebar & Tab Switching Logic
+       ========================================================================= */
+    const tabTitles = {
+        about: 'Portfolio — About Me',
+        projects: 'Portfolio — Projects',
+        socials: 'Portfolio — Socials'
+    };
+
+    function switchTab(tabId) {
+        // Save current active tab in localStorage
+        localStorage.setItem('activeTab', tabId);
+
+        sidebarItems.forEach(item => {
+            if (item.getAttribute('data-tab') === tabId) {
+                item.classList.add('active');
+            } else {
+                item.classList.remove('active');
+            }
+        });
+
+        tabPanes.forEach(pane => {
+            if (pane.id === `tab-${tabId}`) {
+                pane.classList.add('active');
+            } else {
+                pane.classList.remove('active');
+            }
+        });
+
+        titleText.textContent = tabTitles[tabId] || 'Portfolio';
+        
+        // Ensure visible
+        portfolioWindow.classList.remove('minimized');
+        portfolioWindow.classList.add('active');
+
+        // Hide touch-grass container when switching tabs
+        const touchGrassView = document.getElementById('touch-grass-view');
+        if (touchGrassView) {
+            touchGrassView.classList.remove('visible');
+        }
+    }
+
+    sidebarItems.forEach(item => {
+        item.addEventListener('click', (e) => {
+            e.stopPropagation();
+            const tabId = item.getAttribute('data-tab');
+            switchTab(tabId);
+        });
+    });
+
+    // Handle internal "projects" text link inside About Me bio content
+    if (bioProjectsLink) {
+        bioProjectsLink.addEventListener('click', (e) => {
+            e.preventDefault();
+            e.stopPropagation();
+            switchTab('projects');
+        });
+    }
+
+    /* =========================================================================
+       3. Window Controls & Action (Close Joke Warning Dialog)
+       ========================================================================= */
+    
+    // Red close button click triggers joke dialog
+    closeBtn.addEventListener('click', (e) => {
+        e.stopPropagation();
+        showJokeDialog();
+    });
+
+    // Yellow minimize folds window
+    minimizeBtn.addEventListener('click', (e) => {
+        e.stopPropagation();
+        portfolioWindow.classList.add('minimized');
+        portfolioWindow.classList.remove('active');
+        
+        // Show touch-grass container
+        const touchGrassView = document.getElementById('touch-grass-view');
+        if (touchGrassView) {
+            touchGrassView.classList.add('visible');
+        }
+    });
+
+    // Green maximize toggle size
+    maximizeBtn.addEventListener('click', (e) => {
+        e.stopPropagation();
+        portfolioWindow.classList.toggle('maximized');
+        portfolioWindow.classList.add('active');
+        if (!portfolioWindow.classList.contains('maximized')) {
+            centerWindow();
+        }
+    });
+
+    function showJokeDialog() {
+        dialogTitle.textContent = 'Portal Lock Error';
+        dialogMessage.textContent = "You can't close it for now. The weeb division of our tech department has locked this portal. Please seek help (or touch grass).";
+        dialogPrimaryBtn.textContent = 'Touch Grass';
+        dialogSecondaryBtn.textContent = 'Cancel';
+        dialogOverlay.classList.add('open');
+    }
+
+    // Primary action button in dialog (Touch Grass redirects to Google search)
+    dialogPrimaryBtn.addEventListener('click', (e) => {
+        e.stopPropagation();
+        dialogOverlay.classList.remove('open');
+        window.open('https://www.google.com/search?q=how+to+touch+grass&tbm=isch', '_blank');
+    });
+
+    // Secondary button closes dialog
+    dialogSecondaryBtn.addEventListener('click', (e) => {
+        e.stopPropagation();
+        dialogOverlay.classList.remove('open');
+    });
+
+    // Click outside dialog box closes overlay
+    dialogOverlay.addEventListener('click', (e) => {
+        if (e.target === dialogOverlay) {
+            dialogOverlay.classList.remove('open');
+        }
+    });
+
+    /* =========================================================================
+       4. Theme Switching Logic (Space Gray / Burning Eyes)
+       ========================================================================= */
+    function toggleTheme() {
+        if (document.body.classList.contains('light-theme')) {
+            // Switch to Dark
+            document.body.classList.remove('light-theme');
+            document.body.classList.add('dark-theme');
+            headerThemeToggle.innerHTML = `
+                <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="theme-icon-svg">
+                    <path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"></path>
+                </svg>
+            `;
+        } else {
+            // Switch to Light
+            document.body.classList.remove('dark-theme');
+            document.body.classList.add('light-theme');
+            headerThemeToggle.innerHTML = `
+                <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" class="theme-icon-svg">
+                    <circle cx="12" cy="12" r="5"></circle>
+                    <line x1="12" y1="1" x2="12" y2="3"></line>
+                    <line x1="12" y1="21" x2="12" y2="23"></line>
+                    <line x1="4.22" y1="4.22" x2="5.64" y2="5.64"></line>
+                    <line x1="18.36" y1="18.36" x2="19.78" y2="19.78"></line>
+                    <line x1="1" y1="12" x2="3" y2="12"></line>
+                    <line x1="21" y1="12" x2="23" y2="12"></line>
+                    <line x1="4.22" y1="19.78" x2="5.64" y2="18.36"></line>
+                    <line x1="18.36" y1="5.64" x2="19.78" y2="4.22"></line>
+                </svg>
+            `;
+        }
+    }
+
+    headerThemeToggle.addEventListener('click', (e) => {
+        e.stopPropagation();
+        toggleTheme();
+    });
+});

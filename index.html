@@ -1,80 +1,198 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>whooslizi</title>
-  <meta name="description" content="whooslizi" />
-
-  <link rel="preconnect" href="https://fonts.googleapis.com">
-  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Press+Start+2P&display=swap" rel="stylesheet">
-
-  <link rel="stylesheet" href="styles.css" />
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>whooslizi</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link
+        href="https://fonts.googleapis.com/css2?family=Fira+Code:wght@400;500&family=Outfit:wght@300;400;500;600;700&display=swap"
+        rel="stylesheet">
+    <link rel="stylesheet" href="styles.css">
 </head>
 
-<body>
-  <!-- PAGE CLOUDS -->
-  <div class="pageClouds" aria-hidden="true">
-    <span class="c c1"></span>
-    <span class="c c2"></span>
-    <span class="c c3"></span>
-    <span class="c c4"></span>
-    <span class="c c5"></span>
-    <span class="c c6"></span>
-  </div>
+<body class="dark-theme">
 
-  <!-- HEADER -->
-  <header class="topbar">
-    <div class="brand">whooslizi</div>
+    <div class="bg-blobs">
+        <div class="blob blob-1"></div>
+        <div class="blob blob-2"></div>
+        <div class="blob blob-3"></div>
+    </div>
 
-    <nav class="nav">
-      <a href="https://github.com/whooslizi" target="_blank" rel="noopener">Projects</a>
-    </nav>
-  </header>
+    <!-- Desktop Area -->
+    <main class="desktop">
+        <div class="window active" id="portfolio-window">
+            <!-- Titlebar -->
+            <div class="window-header" id="window-titlebar">
+                <div class="window-controls">
+                    <span class="control close-btn" title="Close" id="window-close"></span>
+                    <span class="control minimize-btn" title="Minimize" id="window-minimize"></span>
+                    <span class="control maximize-btn" title="Maximize/Restore" id="window-maximize"></span>
+                </div>
+                <div class="window-title-container">
+                    <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
+                        stroke-linecap="round" stroke-linejoin="round" class="window-title-icon">
+                        <path d="M22 19a2 2 0 0 1-2 2H4a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h5l2 3h9a2 2 0 0 1 2 2z"></path>
+                    </svg>
+                    <span class="window-title" id="window-title-text">Portfolio — About Me</span>
+                </div>
+                <div class="window-actions-right">
+                    <button class="window-theme-toggle" id="header-theme-toggle" title="Toggle Theme">
+                        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+                            stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="theme-icon-svg">
+                            <path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"></path>
+                        </svg>
+                    </button>
+                </div>
+            </div>
 
-  <main class="hero">
-    <!-- LEFT -->
-    <section class="left">
-      <div class="hello">Hello, I’m</div>
-      <h1 class="name">whooslizi</h1>
+            <div class="window-body">
+                <aside class="window-sidebar">
+                    <div class="sidebar-section">
+                        <h4 class="sidebar-title">Menu</h4>
+                        <ul class="sidebar-list">
+                            <li class="sidebar-item active" data-tab="about">
+                                <span class="sidebar-label">About Me</span>
+                            </li>
+                            <li class="sidebar-item" data-tab="projects">
+                                <span class="sidebar-label">Projects</span>
+                            </li>
+                            <li class="sidebar-item" data-tab="socials">
+                                <span class="sidebar-label">Socials</span>
+                            </li>
+                        </ul>
+                    </div>
+                </aside>
 
-      <div class="bio">
-        <p>I play <b>Minecraft</b> and <b>Genshin Impact</b>.</p>
+                <div class="window-content">
 
-        <p>
-          I listen to a lot of music, including
-          <a href="https://open.spotify.com/artist/41MozSoPIsD1dJM0CLPjZF" target="_blank" rel="noopener">BLACKPINK</a>,
-          <a href="https://open.spotify.com/artist/06HL4z0CvFAxyc27GXpf02" target="_blank" rel="noopener">Taylor Swift</a>,
-          <a href="https://open.spotify.com/artist/1LEtM3AleYg1xabW6CRkpi" target="_blank" rel="noopener">Đen Vâu</a>,
-          <a href="https://open.spotify.com/artist/0BabS6fZxJY5qN9x7YF0YF" target="_blank" rel="noopener">BABYMONSTER</a>.
-        </p>
+                    <!-- About -->
+                    <div class="tab-pane active" id="tab-about">
+                        <div class="about-hero">
+                            <div class="avatar-container">
+                                <img src="https://avatars.githubusercontent.com/u/86664792?v=4" alt="Weeb Avatar"
+                                    class="profile-avatar">
+                            </div>
+                            <div class="hero-text">
+                                <h1>Hello, I'm whooslizi</h1>
+                            </div>
+                        </div>
 
-        <p>
-          I have a strong addiction to
-          <a href="https://genshin-impact.fandom.com/wiki/Wanderer" target="_blank" rel="noopener">Wanderer</a>
-          and
-          <a href="https://tenkinoko.fandom.com/wiki/Hodaka_Morishima" target="_blank" rel="noopener">Hodaka</a>
-          from <i>Tenki no Ko</i>.
-        </p>
+                        <div class="content-section bio-paragraphs">
+                            <p>I play <span class="bio-highlight">Minecraft</span>, <span class="bio-highlight">Genshin
+                                    Impact</span>, and <span class="bio-highlight">Honkai Star Rail</span> (yes, indeed
+                                a weeb I know)</p>
 
-        <p>
-          I also like to tweak technology — if you want to get your eyes burned,
-          you can check out my
-          <a href="https://github.com/whooslizi" target="_blank" rel="noopener">projects</a>.
-        </p>
-      </div>
+                            <p>I listen to a lot of genre, including <span class="bio-highlight">V-pop</span>, <span
+                                    class="bio-highlight">K-pop</span>, <span class="bio-highlight">US-UK</span>, and a
+                                countless number of <span class="bio-highlight">J-pop</span> that I cannot named.</p>
 
-      <div class="hint">Tip: press <kbd>Space</kbd> or click to flap.</div>
-      <div class="copyright">Copyright © 2026 Lizi</div>
-    </section>
+                            <p>I have a strong addiction to <a href="https://genshin-impact.fandom.com/wiki/Wanderer"
+                                    target="_blank" class="bio-link">Wanderer</a> (in Genshin Impact) and <a
+                                    href="https://tenkinoko.fandom.com/wiki/Hodaka_Morishima" target="_blank"
+                                    class="bio-link">Hodaka</a> (from Tenki no Ko)</p>
+                        </div>
+                    </div>
 
-    <!-- GAME -->
-    <section class="right">
-      <canvas id="game" aria-label="Flappy game"></canvas>
-    </section>
-  </main>
+                    <!-- Tab Content: Projects -->
+                    <div class="tab-pane" id="tab-projects">
+                        <div class="tab-header-description">
+                            <h2>Projects</h2>
+                        </div>
 
-  <script src="script.js"></script>
+                        <div class="projects-empty-container">
+                            <div class="empty-folder-container">
+                                <svg width="48" height="48" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+                                    stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
+                                    <path
+                                        d="M22 19a2 2 0 0 1-2 2H4a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h5l2 3h9a2 2 0 0 1 2 2z">
+                                    </path>
+                                </svg>
+                            </div>
+                            <div class="empty-text-box">
+                                <p>I don't have any projects I'm confident enough to feature here <u>just yet</u>. Every
+                                    single one was made for my own usages, and well, most, <i>I mean all of them</i> are
+                                    poorly coded. If you still want to burn your eyes, take a look at my GitHub.</p>
+                            </div>
+                            <a href="https://github.com/whooslizi" target="_blank" class="github-cta-btn small-btn">
+                                <span>Visit my GitHub</span>
+                            </a>
+                        </div>
+                    </div>
+
+                    <!-- Socials -->
+                    <div class="tab-pane" id="tab-socials">
+                        <div class="tab-header-description">
+                            <h2>My socials</h2>
+                        </div>
+
+                        <div class="socials-simplified-rows">
+                            <div class="social-text-row">
+                                <img src="https://upload.wikimedia.org/wikipedia/commons/9/91/Octicons-mark-github.svg"
+                                    class="social-row-icon img-logo" alt="GitHub Logo">
+                                <span class="social-row-content">
+                                    <a href="https://github.com/whooslizi" target="_blank"
+                                        class="social-row-link">@whooslizi on GitHub</a> (might burn your eyes)
+                                </span>
+                            </div>
+                            <div class="social-text-row">
+                                <img src="https://upload.wikimedia.org/wikipedia/commons/c/ce/X_logo_2023.svg"
+                                    class="social-row-icon img-logo" alt="X Logo">
+                                <span class="social-row-content">
+                                    <a href="https://x.com/hodakawl" target="_blank" class="social-row-link">@hodakawl
+                                        on X</a> (yes, strangely I use that social media)
+                                </span>
+                            </div>
+
+                            <!-- LinkedIn swapped for Mail Logo -->
+                            <div class="social-text-row group-row">
+                                <div class="social-row-logos">
+                                    <img src="https://upload.wikimedia.org/wikipedia/commons/3/3d/Envelope_font_awesome.svg"
+                                        class="social-row-icon inline-logo img-logo" alt="Mail Logo">
+                                </div>
+                                <span class="social-row-content explanation-text">
+                                    If you ever wanted to reach out to me for whatever reason, feel free to message me
+                                    on X. I'd prefer to keep my real-world personal profile separate.
+                                </span>
+                            </div>
+                        </div>
+                    </div>
+
+                </div>
+            </div>
+        </div>
+        <div class="touch-grass-container" id="touch-grass-view">
+            <img src="touch-grass.jpg" alt="Touch Grass" class="touch-grass-photo">
+        </div>
+    </main>
+
+    <div class="mac-dialog-overlay" id="dialog-overlay">
+        <div class="mac-dialog" id="mac-warning-dialog">
+            <div class="mac-dialog-header">
+                <div class="mac-dialog-warning-icon">
+                    <svg width="36" height="36" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
+                        stroke-linecap="round" stroke-linejoin="round">
+                        <path d="m21.73 18-8-14a2 2 0 0 0-3.48 0l-8 14A2 2 0 0 0 4 21h16a2 2 0 0 0 1.73-3Z"></path>
+                        <line x1="12" y1="9" x2="12" y2="13"></line>
+                        <line x1="12" y1="17" x2="12.01" y2="17"></line>
+                    </svg>
+                </div>
+                <h3 class="mac-dialog-title" id="dialog-title">Close Window</h3>
+            </div>
+            <div class="mac-dialog-body">
+                <p id="dialog-message">You can't close it for now. The weeb division of our tech department has locked
+                    this portal. Please seek help (or touch grass).</p>
+            </div>
+            <div class="mac-dialog-footer">
+                <button class="mac-dialog-btn default-btn" id="dialog-primary-btn">Touch Grass</button>
+                <button class="mac-dialog-btn" id="dialog-secondary-btn">Cancel</button>
+            </div>
+        </div>
+    </div>
+
+    <script src="script.js"></script>
 </body>
+
 </html>
