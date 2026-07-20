@@ -40,8 +40,7 @@ document.addEventListener('DOMContentLoaded', () => {
     
     setTimeout(() => {
         centerWindow();
-        const lastTab = localStorage.getItem('activeTab') || 'about';
-        switchTab(lastTab);
+        switchTab('about');
     }, 100);
     window.addEventListener('resize', centerWindow);
 
@@ -103,7 +102,7 @@ document.addEventListener('DOMContentLoaded', () => {
         isDragging = false;
     }
 
-  portfolioWindow.addEventListener('click', (e) => {
+    portfolioWindow.addEventListener('click', (e) => {
         e.stopPropagation();
         portfolioWindow.classList.add('active');
     });
@@ -126,8 +125,7 @@ document.addEventListener('DOMContentLoaded', () => {
         }
     });
 
-  // Sidebar
-  
+    // Sidebar
     const tabTitles = {
         about: '@whooslizi',
         projects: '@whooslizi',
@@ -135,8 +133,6 @@ document.addEventListener('DOMContentLoaded', () => {
     };
 
     function switchTab(tabId) {
-        localStorage.setItem('activeTab', tabId);
-
         sidebarItems.forEach(item => {
             if (item.getAttribute('data-tab') === tabId) {
                 item.classList.add('active');
@@ -229,7 +225,6 @@ document.addEventListener('DOMContentLoaded', () => {
             dialogOverlay.classList.remove('open');
         }
     });
-
 
     function toggleTheme() {
         if (document.body.classList.contains('light-theme')) {
